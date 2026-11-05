@@ -14,11 +14,9 @@ const app = express();
 const PORT = 5001;
 
 // Allow requests only from the local ManifestoLens frontend
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-  })
-);
+app.use(cors({
+  origin: /^http:\/\/localhost:\d+$/
+}));
 
 // Limit incoming JSON request size
 app.use(express.json({ limit: "100kb" }));
@@ -1133,7 +1131,6 @@ const sources = groundingChunks
   }
 });
 // Start ManifestoLens backend server
-
 const server = app.listen(PORT, () => {
   console.log(`ManifestoLens server running on http://localhost:${PORT}`);
   console.log("Server listening:", server.listening);
