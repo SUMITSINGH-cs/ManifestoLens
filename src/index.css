@@ -1,0 +1,114 @@
+
+:root {
+  /* Brand colours */
+  --navy: #172554;
+  --blue: #2563EB;
+  --violet: #7C3AED;
+  --teal: #0D9488;
+  --amber: #F59E0B;
+  --coral: #EA580C;
+
+  /* Background colours */
+  --bg: #F1F5F9;
+  --surface: #FFFFFF;
+  --surface-soft: #F8FAFC;
+
+  /* Text colours */
+  --text: #475569;
+  --text-h: #172554;
+  --text-muted: #64748B;
+
+  /* Borders and effects */
+  --border: #E2E8F0;
+  --accent: var(--blue);
+  --accent-bg: #EFF6FF;
+  --accent-border: #BFDBFE;
+  --shadow: 0 10px 30px rgba(23, 37, 84, 0.08);
+
+  /* Typography */
+  --sans: Inter, system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: Inter, system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--text);
+  background: var(--bg);
+  color-scheme: light;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--heading);
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.15;
+  letter-spacing: -1.5px;
+}
+
+h2 {
+  font-size: clamp(24px, 3vw, 36px);
+  line-height: 1.25;
+}
+
+p {
+  margin-top: 0;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  background: #DBEAFE;
+  color: var(--navy);
+}
+
+:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 3px;
+}
+
+code {
+  font-family: var(--mono);
+}

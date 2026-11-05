@@ -1,0 +1,61 @@
+
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
+import { createCanvas } from "@napi-rs/canvas";
+import { createWorker } from "tesseract.js";
+
+export async function extractScannedPdfText(pdfBuffer) {
+  let worker;
+
+  try {
+    console.log("Starting OCR extraction...");
+
+    worker = await createWorker("eng");
+
+    const pdf = await pdfjsLib.getDocument({
+      data: new Uint8Array(pdfBuffer),
+    }).promise;
+
+    const pages = [];
+
+    for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+      console.log(`OCR processing page ${pageNumber}/${pdf.numPages}`);
+
+      const page = await pdf.getPage(pageNumber);
+      const viewport = page.getViewport({ scale: 2 });
+
+      const canvas = createCanvas(
+        Math.ceil(viewport.width),
+        Math.ceil(viewport.height)
+      );
+
+      const context = canvas.getContext("2d");
+
+      await page.render({
+        canvasContext: context,
+        viewport,
+      }).promise;
+
+      const imageBuffer = canvas.toBuffer("image/png");
+
+      const result = await worker.recognize(imageBuffer);
+
+      pages.push({
+        pageNumber,
+        text: result.data.text.trim(),
+      });
+    }
+
+    await pdf.destroy();
+
+    console.log("OCR extraction completed!");
+
+    return {
+      totalPages: pages.length,
+      pages,
+    };
+  } finally {
+    if (worker) {
+      await worker.terminate();
+    }
+  }
+}
